@@ -3,11 +3,10 @@ import AppSearch from './components/AppSearch.vue';
 import AppContent from './components/AppContent.vue';
 
 
-
-
-
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { store } from './store';
 import axios from "axios";
+import "/node_modules/@fortawesome/fontawesome-free/css/all.css";
 
 export default {
   components: {

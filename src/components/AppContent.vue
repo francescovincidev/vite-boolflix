@@ -1,19 +1,35 @@
 <script>
 import { store } from '../store';
-import "/node_modules/flag-icons/css/flag-icons.min.css";
-import "../../node_modules/flag-icons/css/flag-icons.min.css"
+
 
 export default {
     name: "AppContent",
     data() {
         return {
-            store
+            store,
+            valutazione: "",
+            numberStar: store.films.vote_average
+
         }
     },
 
     props: {
         shows: Object
-    }
+    },
+
+    methods: {
+        starsFuncition(vote) {
+            let starVote = Math.ceil(vote / 2);
+            let star = '';
+            for (let i = 0; i < starVote; i++) {
+                star += '<i class="fa-solid fa-star"></i>';
+            }
+            return star;
+        }
+
+
+    },
+
 
 }
 
@@ -35,20 +51,24 @@ export default {
                     <span v-if="film.original_language == 'en'" class="fi fi-gb"></span>
                     <span v-if="film.original_language == 'ja'" class="fi fi-jp"></span>
 
-                    <span :class="'fi fi-'+film.original_language"></span>
-                    
+                    <span :class="'fi fi-' + film.original_language"></span>
+
 
                 </div>
                 <div>
                     Voto: {{ film.vote_average }}
+                    {{ valutazione }}
+                  <span>{{starsFuncition(film.vote_average)}}</span>  
+
+
                 </div>
                 <div>
-                    <img :src="'https://image.tmdb.org/t/p/w342'+film.poster_path" alt="">
+                    <img :src="'https://image.tmdb.org/t/p/w342' + film.poster_path" alt="">
                 </div>
             </li>
         </ul>
 
-        TV SHow:
+        TV Show:
         <ul>
             <li v-for="tvShow in store.TvShows">
                 <div>
@@ -62,13 +82,13 @@ export default {
                     <span v-if="tvShow.original_language == 'en'" class="fi fi-gb"></span>
                     <span v-if="tvShow.original_language == 'ja'" class="fi fi-jp"></span>
 
-                    <span :class="'fi fi-'+tvShow.original_language"></span>
+                    <span :class="'fi fi-' + tvShow.original_language"></span>
                 </div>
                 <div>
                     Voto: {{ tvShow.vote_average }}
                 </div>
                 <div>
-                    <img :src="'https://image.tmdb.org/t/p/w342'+tvShow.poster_path" alt="">
+                    <img :src="'https://image.tmdb.org/t/p/w342' + tvShow.poster_path" alt="">
                 </div>
             </li>
         </ul>
@@ -79,7 +99,8 @@ export default {
 li {
     padding: 10px;
 }
-.show-list{
+
+.show-list {
     display: flex;
 
 }
