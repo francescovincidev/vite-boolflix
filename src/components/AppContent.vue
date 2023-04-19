@@ -1,5 +1,7 @@
 <script>
 import { store } from '../store';
+import "/node_modules/flag-icons/css/flag-icons.min.css";
+import "../../node_modules/flag-icons/css/flag-icons.min.css"
 
 export default {
     name: "AppContent",
@@ -30,6 +32,12 @@ export default {
                 </div>
                 <div>
                     Linugua originale: {{ film.original_language }}
+                    <span v-if="film.original_language == 'en'" class="fi fi-gb"></span>
+                    <span v-if="film.original_language == 'ja'" class="fi fi-jp"></span>
+
+                    <span :class="'fi fi-'+film.original_language"></span>
+                    
+
                 </div>
                 <div>
                     Voto: {{ film.vote_average }}
@@ -48,6 +56,10 @@ export default {
                 </div>
                 <div>
                     Lingua originale: {{ tvShow.original_language }}
+                    <span v-if="tvShow.original_language == 'en'" class="fi fi-gb"></span>
+                    <span v-if="tvShow.original_language == 'ja'" class="fi fi-jp"></span>
+
+                    <span :class="'fi fi-'+tvShow.original_language"></span>
                 </div>
                 <div>
                     Voto: {{ tvShow.vote_average }}
