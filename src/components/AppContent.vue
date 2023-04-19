@@ -42,6 +42,9 @@ export default {
                 <div>
                     Voto: {{ film.vote_average }}
                 </div>
+                <div>
+                    <img :src="'https://image.tmdb.org/t/p/w342'+film.poster_path" alt="">
+                </div>
             </li>
         </ul>
 
@@ -63,6 +66,9 @@ export default {
                 </div>
                 <div>
                     Voto: {{ tvShow.vote_average }}
+                </div>
+                <div>
+                    <img :src="'https://image.tmdb.org/t/p/w342'+tvShow.poster_path" alt="">
                 </div>
             </li>
         </ul>
