@@ -43,6 +43,13 @@ export default {
                         <span v-if="category.type == 'Film'">{{ show.original_title }}</span>
                         <span v-if="category.type == 'TV Show'">{{ show.original_name }}</span>
                     </div>
+
+                    <div>
+                        Lingua originale: {{ show.original_language }}
+                        <span v-if="show.original_language == 'en'" class="fi fi-gb"></span>
+                        <span v-if="show.original_language == 'ja'" class="fi fi-jp"></span>
+                        <span :class="'fi fi-' + show.original_language"></span>
+                    </div>
                     <div>
                         {{ starsFuncition(show.vote_average) }}
                         Voto:
