@@ -23,28 +23,23 @@ export default {
       this.store.loading = true;
       const params = {};
       if (this.store.wordToSearch) {
+        params.api_key = this.store.apiKey;
         params.query = this.store.wordToSearch;
       }
-      axios.get(this.store.apiSearchFilm, {
-        params
-      }).then(resp => {
-        this.store.films = resp.data.results;
-      }).catch(error => {
-        console.log(error);
-      }).finally(() => {
-        this.store.loading = false;
-      })
-      
-      axios.get(this.store.apiSearchTVShow, {
-        params
-      }).then(resp => {
-        this.store.TvShows = resp.data.results;
-      }).catch(error => {
-        console.log(error);
-      }).finally(() => {
-        this.store.loading = false;
-        console.log(this.store.films, this.store.TvShows);
-       })
+
+      for (let i = 0; i < this.store.toSearch.length; i++) {
+
+        axios.get(this.store.apiURL + this.store.toSearch[i].url, {
+          params
+        }).then(resp => {
+          this.store.toSearch[i].list = resp.data.results;
+        }).catch(error => {
+          console.log(error);
+        }).finally(() => {
+          this.store.loading = false;
+        })
+
+      }
     },
     filtrShow() {
       this.getShows();
@@ -55,7 +50,7 @@ export default {
 
 <template>
   <AppSearch @filter="filtrShow" />
-  <AppContent/>
+  <AppContent />
 </template>
 
 <style scoped></style>

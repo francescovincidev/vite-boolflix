@@ -15,6 +15,6 @@ import { store } from '../store';
 </script>
 
 <template>
-    <input type="text" name="" id="" v-model="store.wordToSearch">
+    <input type="text" name="" id="" v-model="store.wordToSearch"  @keyup.enter="$emit(`filter`)">
     <button @click="$emit(`filter`)">Cerca</button>
 </template>
