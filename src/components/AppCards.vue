@@ -8,23 +8,19 @@ export default {
             store
         }
     },
-    mounted() {
-
-        console.log(this.show);
-        console.log(this.show.list[0].title);
-    },
-
-
     props: {
         show: Object,
         index: Number
     },
     methods: {
-        starsFuncition(vote) {
-            this.fullStar = Math.ceil(vote / 2);
-            this.emptyStar = 5 - this.fullStar
-        }
+
     },
+    computed: {
+        starsFuncition() {
+            return Math.ceil(this.show.list[this.index].vote_average / 2);
+        }
+
+    }
 
 
 }
@@ -34,9 +30,11 @@ export default {
 <template>
     <div class="card">
         <div class="poster">
-            <img :src="'https://image.tmdb.org/t/p/w185' + show.list[index].poster_path" alt="">
+            <img v-if="show.list[index].poster_path === null"
+                src="https://static8.depositphotos.com/1009634/988/v/450/depositphotos_9883921-stock-illustration-no-user-profile-picture.jpg"
+                alt="">
+            <img v-else :src="'https://image.tmdb.org/t/p/w185' + show.list[index].poster_path" alt="">
             <div class="show-info p-2">
-
                 <div class="title">Titolo:
                     <span v-if="show.type == 'Film'">{{ show.list[index].title }}</span>
                     <span v-if="show.type == 'TV Show'">{{ show.list[index].name }}</span>
@@ -52,10 +50,9 @@ export default {
                 </div>
                 <div class="vote-average">
                     <div>
-                        {{ starsFuncition(show.list[index].vote_average) }}
                         Voto:
-                        <span v-for="num, index in fullStar" :key="index"><i class="fa-solid fa-star"></i></span>
-                        <span v-for="num, index in emptyStar" :key="index"><i class="fa-regular fa-star"></i></span>
+                        <span v-for="num, index in  starsFuncition" :key="index"><i class="fa-solid fa-star"></i></span>
+                        <span v-for="num, index in 5 - starsFuncition" :key="index"><i class="fa-regular fa-star"></i></span>
 
                     </div>
                 </div>
@@ -73,6 +70,7 @@ export default {
     width: 175px;
     position: relative;
     flex-shrink: 0;
+    background-color: black;
 
     img {
         height: 260px;
@@ -86,15 +84,20 @@ export default {
         left: 0;
         color: white;
         display: none;
+        overflow: auto;
+        height: 100%;
+
     }
 
     .poster:hover {
         img {
             filter: brightness(40%);
         }
+
         .show-info {
             display: block;
             filter: none;
+
         }
     }
 

@@ -1,16 +1,16 @@
 <script>
 import { store } from '../store';
 
-    export default {
-        name: "AppSearch",
-        emits:["filter"],
-        data() {
-            return{
-                store
-            }
-        },
-        
-    }
+export default {
+    name: "AppSearch",
+    emits: ["filter"],
+    data() {
+        return {
+            store
+        }
+    },
+
+}
 
 </script>
 
@@ -23,8 +23,12 @@ import { store } from '../store';
                 Boolflix
             </div>
             <div>
-                <input type="text" name="" id="" v-model="store.wordToSearch"  @keyup.enter="$emit(`filter`)">
+                <input type="text" name="" id="" v-model="store.wordToSearch" @keyup.enter="$emit(`filter`)">
                 <button @click="$emit(`filter`)">Cerca</button>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example"  v-model="store.genreList.genreSelecterd">
+                    <option selected value= 0 >Seleziona genere</option>
+                    <option v-for="genere in store.genreList.list" :key="genere.id" :value="genere.id">{{ genere.name }}</option>
+                </select>
             </div>
         </div>
     </div>
@@ -32,18 +36,19 @@ import { store } from '../store';
 
 <style scoped lang="scss">
 @use "../style/partials/mixins" as *;
-.header-bar{
+
+.header-bar {
     height: 80px;
     background-color: black;
-    .content{
+
+    .content {
         @include container;
-        
-        .app-name{
+
+        .app-name {
             color: red;
             text-transform: uppercase;
         }
     }
-    
-}
 
+}
 </style>

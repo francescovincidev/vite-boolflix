@@ -15,24 +15,61 @@ export default {
   },
   data() {
     return {
-      store
+      store,
+      nameGenres: [],
+    }
+  },
+  mounted() {
+    for (let i = 0; i < this.store.genreList.url.length; i++) {
+
+      axios.get(this.store.apiURL + this.store.genreList.url[i], {
+        params: {
+          api_key: this.store.apiKey
+        }
+      }).then(resp => {
+
+        for (let y = 0; y < resp.data.genres.length; y++) {
+          if (!this.nameGenres.includes(resp.data.genres[y].id)) {
+            this.nameGenres.push(resp.data.genres[y].id)
+            this.store.genreList.list.push(resp.data.genres[y])
+
+          }
+        }
+      }).catch(error => {
+        console.log(error);
+      }).finally(() => {
+      })
+
+
     }
   },
   methods: {
     getShows() {
-      this.store.loading = true;
+
       const params = {};
       if (this.store.wordToSearch) {
+        this.store.loading = true;
         params.api_key = this.store.apiKey;
         params.query = this.store.wordToSearch;
-      }
+      
 
       for (let i = 0; i < this.store.toSearch.length; i++) {
-
+        this.store.toSearch[i].list =[];
         axios.get(this.store.apiURL + this.store.toSearch[i].url, {
           params
         }).then(resp => {
-          this.store.toSearch[i].list = resp.data.results;
+
+          // ciclo per cercare con genere
+          for (let y = 0; y < resp.data.results.length; y++) {
+
+            if (this.store.genreList.genreSelecterd && resp.data.results[y].genre_ids.includes(this.store.genreList.genreSelecterd)) {
+              this.store.toSearch[i].list.push(resp.data.results[y]);
+
+            } else if (this.store.genreList.genreSelecterd == 0) {
+              this.store.toSearch[i].list = resp.data.results;
+
+            }
+          }
         }).catch(error => {
           console.log(error);
         }).finally(() => {
@@ -40,6 +77,7 @@ export default {
         })
 
       }
+    }
     },
     filtrShow() {
       this.getShows();
@@ -53,4 +91,6 @@ export default {
   <AppContent />
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+@use "./style/general.scss";
+</style>

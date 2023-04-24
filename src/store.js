@@ -12,9 +12,14 @@ export const store = reactive({
         url: "/search/tv",
         list: []
     }],
+    genreList: {
+        url: ["/genre/movie/list","/genre/tv/list"],
+        list:[],
+        genreSelecterd: 0
+    },
     wordToSearch: "",
     apiURL: "https://api.themoviedb.org/3",
     apiKey: "8dccd71fac77f7e772cd2318a37f630e",
     apiPopularFilm: "https://api.themoviedb.org/3/movie/popular?api_key=8dccd71fac77f7e772cd2318a37f630e",
-    loading: true,
+    loading: false
 });
